@@ -1,3 +1,28 @@
+equivs (2.3.2) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Axel Beckert ]
+  * Use --ignore-builtin-builddeps instead of -d as #958414 fix.
+    Thanks Guillem Jover!
+  * Override team/pkg-perl/testsuite/no-team-tests as equivs is a native
+    application and has deliberately a dedicated debian/tests/control.
+
+  [ Debian Janitor ]
+  * Update standards version to 4.5.1, no changes needed.
+  * Set Testsuite header for perl package.
+
+  [ Roland Clobus ]
+  * Reproducible changelog entry.
+    The generated packages will have a changelog entry with a reproducible
+    timestamp (if required).
+    See https://reproducible-builds.org/docs/source-date-epoch/
+
+  [ gregor herrmann ]
+  * Declare compliance with Debian Policy 4.7.2.
+
+ -- gregor herrmann <gregoa@debian.org>  Sun, 20 Apr 2025 01:46:29 +0200
+
 equivs (2.3.1) unstable; urgency=medium
 
   [ Johannes 'josch' Schauer ]
