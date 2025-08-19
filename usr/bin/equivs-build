@@ -181,11 +181,11 @@ unlink glob "debian/*.in";
 
 my @build_cmd;
 if ($full_package) {
-    @build_cmd = (qw(dpkg-buildpackage -uc -us -d), ($arch ? "-a$arch" : ()));
+    @build_cmd = (qw(dpkg-buildpackage -uc -us --ignore-builtin-builddeps), ($arch ? "-a$arch" : ()));
 } elsif ($source_only) {
-    @build_cmd = (qw(dpkg-buildpackage -uc -us -d -S));
+    @build_cmd = (qw(dpkg-buildpackage -uc -us --ignore-builtin-builddeps -S));
 } else {
-    @build_cmd = (qw(dpkg-buildpackage -uc -us -d -b),
+    @build_cmd = (qw(dpkg-buildpackage -uc -us --ignore-builtin-builddeps -b),
                   ($arch ? ("-a$arch") : ()));
 }
 system @build_cmd;
@@ -336,11 +336,12 @@ sub write_control_file {
 
 sub make_changelog {
   my ($builddir, $control) = @_;
-  my ($version, $suite, $date);
+  my ($version, $suite, $date, $timestamp);
 
   $version = $control->{'Version'} || "1.0";
   $suite = $control->{'Suite'} || "unstable";
-  chomp ($date = qx(date -R));
+  chomp ($timestamp = $ENV{SOURCE_DATE_EPOCH} || qx(date +%s));
+  chomp ($date = qx(date -R --utc -d\@${timestamp}));
 
   open OUT, '>', "$builddir/debian/changelog" or
     die "Couldn't write changelog: $!\n";
